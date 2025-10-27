@@ -45,7 +45,6 @@ public class RssWatcher
     public async Task CheckAsync(string channelId, CancellationToken ct = default)
     {
         var feedUrl = $"https://www.youtube.com/feeds/videos.xml?channel_id={channelId}";
-        Console.WriteLine($"Checking {channelId} at {feedUrl}");
 
         // Optional: send conditional headers if we’ve got them.
         if (_state.ETags.TryGetValue(channelId, out var etag))
