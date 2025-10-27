@@ -20,4 +20,12 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
 
     [MessageCommand("Timestamp")]
     public static string Timestamp(RestMessage message) => message.CreatedAt.ToString();
+    
+    [SlashCommand("purge", "Deletes recent messages.",
+    DefaultGuildPermissions = Permissions.MentionEveryone,
+    Contexts = [InteractionContextType.Guild])]
+    public string Purge(int amount = 25)
+    {
+        return $"Purged {amount} messages (pretend).";
+    }
 }

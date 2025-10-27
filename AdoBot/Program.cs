@@ -56,6 +56,19 @@ public static class Program
 
         await client.StartAsync();
 
+        var presenceProperties = new PresenceProperties(UserStatusType.Online)
+        {
+            Activities = [
+                new UserActivityProperties("Test", UserActivityType.Playing)
+                {
+                    Name = "Test",
+                }
+            ],
+            Since = DateTime.UtcNow,
+        };
+        await client.UpdatePresenceAsync(presenceProperties);
+
+
         // Start a single consumer that executes queued sends in order
         _ = Task.Run(async () =>
         {

@@ -29,3 +29,4 @@
 /home/timuri/RiderProjects/ado-bot/AdoBot/bin/Debug/net9.0/NetCord.Hosting.dll
 /home/timuri/RiderProjects/ado-bot/AdoBot/bin/Debug/net9.0/NetCord.Hosting.Services.dll
 /home/timuri/RiderProjects/ado-bot/AdoBot/bin/Debug/net9.0/NetCord.Services.dll
+/home/timuri/RiderProjects/ado-bot/AdoBot/obj/Debug/net9.0/AdoBot.sourcelink.json

@@ -99,7 +99,6 @@ public class RssWatcher
         var newOnes = entries.Where(i => !seen.Contains(i.VideoId)).ToList();
         foreach (var item in newOnes)
         {
-            Console.WriteLine($"New upload: **{item.Title}**\n{item.Link}");
             await Program.QueueMessageAsync(893159656459997235, item);
             seen.Add(item.VideoId);
         }
