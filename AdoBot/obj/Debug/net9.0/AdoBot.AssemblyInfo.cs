@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AdoBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cbd91b841adf0bb41d991f47dd47c3fb9aa1576")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+004cfcbadfe721cdb2a7ac6ee7a5eaf4a5ef7bbd")]
 [assembly: System.Reflection.AssemblyProductAttribute("AdoBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AdoBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

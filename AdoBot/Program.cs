@@ -21,6 +21,8 @@ public static class Program
 
     public static async Task Main(string[] args)
     {
+        Config.Load();
+        
         GatewayClient client = new(new BotToken(Config.Token), new GatewayClientConfiguration
         {
             Logger = new ConsoleLogger()
