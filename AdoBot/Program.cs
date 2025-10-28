@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Text.RegularExpressions;
 using System.Threading.Channels;
+using AdoBot.Data;
 using NetCord;
 using NetCord.Gateway;
 using NetCord.Logging;
@@ -22,6 +23,7 @@ public static class Program
     public static async Task Main(string[] args)
     {
         Config.Load();
+        BotDatabase.Init();
         
         GatewayClient client = new(new BotToken(Config.Token), new GatewayClientConfiguration
         {
@@ -86,7 +88,7 @@ public static class Program
                             Title = msg.item.Title,
                             Description = msg.item.Link,
                             Url = msg.item.Link,
-                            Color = new Color(4, 9, 48), // optional red accent
+                            Color = new Color(4, 9, 48),
                             Image = new EmbedImageProperties($"https://img.youtube.com/vi/{TryGetYouTubeId(msg.item.Link)}/0.jpg")
                         };
                         

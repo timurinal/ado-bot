@@ -98,7 +98,7 @@ public class RssWatcher
         var newOnes = entries.Where(i => !seen.Contains(i.VideoId)).ToList();
         foreach (var item in newOnes)
         {
-            await Program.QueueMessageAsync(893159656459997235, item);
+            await Program.QueueMessageAsync(Config.UpdateMessageChannelId, item);
             seen.Add(item.VideoId);
         }
 

@@ -5,6 +5,9 @@ public static class Config
     public const string Id = "UCln9P4Qm3-EAY4aiEPmRwEA";
     
     public static string Token { get; private set; }
+    
+    public static ulong LogChannelId { get; private set; }
+    public static ulong UpdateMessageChannelId { get; private set; }
 
     public static void Load()
     {
@@ -22,6 +25,9 @@ public static class Config
         {
             // Not a fan of this, but it works ig.
             if (line.StartsWith("token=")) Token = line.Substring(6);
+            
+            if (line.StartsWith("logChannelId=")) LogChannelId = ulong.Parse(line.Substring(13));
+            if (line.StartsWith("updateMessageChannelId=")) UpdateMessageChannelId = ulong.Parse(line.Substring(23));
         }
     }
 }

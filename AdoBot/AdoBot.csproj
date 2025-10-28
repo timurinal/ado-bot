@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="LiteDB" Version="6.0.0-prerelease.67" />
       <PackageReference Include="NetCord" Version="1.0.0-alpha.439" />
       <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.439" />
       <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.439" />
