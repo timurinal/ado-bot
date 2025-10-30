@@ -63,9 +63,9 @@ public static class Program
         var presenceProperties = new PresenceProperties(UserStatusType.Online)
         {
             Activities = [
-                new UserActivityProperties("Test", UserActivityType.Playing)
+                new UserActivityProperties("/help for commands", UserActivityType.Listening)
                 {
-                    Name = "Test",
+                    CreatedAt = DateTime.UtcNow,
                 }
             ],
             Since = DateTime.UtcNow,

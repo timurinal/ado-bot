@@ -54,6 +54,8 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
                 {
                     Embeds = [embed]
                 });
+            
+            // TODO: notify the striked user? genuinely no idea how the FUCK i would do that though, since the API doesn't allow DMs
 
             if (updated > 3)
             {
@@ -99,6 +101,31 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
         var embed = new EmbedProperties
         {
             Title = $"Strike count for {user.Username}",
+            Description = $"**Total Strikes:** {count}/3",
+            Color = new Color(255, 180, 0),
+            Timestamp = DateTimeOffset.UtcNow
+        };
+
+        await Context.Interaction.SendResponseAsync(
+            InteractionCallback.Message(new InteractionMessageProperties
+            {
+                Embeds = [embed],
+                Flags = MessageFlags.Ephemeral
+            }));
+    }
+    
+    [SlashCommand("queryself", "Queries your strike count.",
+        Contexts = [InteractionContextType.Guild])]
+    public async Task Slash_QueryStrikesSelf()
+    {
+        var user = Context.User;
+        
+        var count = BotDatabase.Instance.Strikes
+            .FindOne(x => x.GuildId == Context.Guild.Id && x.UserId == user.Id)?.Count ?? 0;
+        
+        var embed = new EmbedProperties
+        {
+            Title = $"Your strike count:",
             Description = $"**Total Strikes:** {count}/3",
             Color = new Color(255, 180, 0),
             Timestamp = DateTimeOffset.UtcNow
@@ -235,6 +262,26 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
     //         Console.WriteLine(ex);
     //     }
     // }
+
+    [SlashCommand("help", "Shows a help message.", Contexts = [InteractionContextType.Guild])]
+    public async Task Slash_Help()
+    {
+        var embed = new EmbedProperties()
+        {
+            Title = "Test",
+            Description = @"
+`/querySelf` - Queries your strike count.
+",
+            Footer = new EmbedFooterProperties() { Text = $"AdoBot Version {Config.Version}" }
+        };
+        
+        await Context.Interaction.SendResponseAsync(
+        InteractionCallback.Message(new InteractionMessageProperties
+        {
+            Embeds = [embed],
+            Flags = MessageFlags.Ephemeral
+        }));
+    }
     
     private static bool TryParseDuration(string input, out TimeSpan result)
     {

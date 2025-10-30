@@ -2,6 +2,7 @@ namespace AdoBot;
 
 public static class Config
 {
+    public const string Version = "1.1.0";
     public const string Id = "UCln9P4Qm3-EAY4aiEPmRwEA";
     
     public static string Token { get; private set; }
