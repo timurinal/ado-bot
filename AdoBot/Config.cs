@@ -9,6 +9,11 @@ public static class Config
     
     public static ulong LogChannelId { get; private set; }
     public static ulong UpdateMessageChannelId { get; private set; }
+    
+    public static ulong Guild { get; private set;  }
+    public static ulong RadioChannel { get; private set;  }
+    
+    public static string DefaultRadioStream { get; private set; }
 
     public static void Load()
     {
@@ -29,6 +34,11 @@ public static class Config
             
             if (line.StartsWith("logChannelId=")) LogChannelId = ulong.Parse(line.Substring(13));
             if (line.StartsWith("updateMessageChannelId=")) UpdateMessageChannelId = ulong.Parse(line.Substring(23));
+            
+            if (line.StartsWith("guild=")) Guild = ulong.Parse(line.Substring(6));
+            if (line.StartsWith("radioChannel=")) RadioChannel = ulong.Parse(line.Substring(13));
+            
+            if (line.StartsWith("defaultRadioStream=")) DefaultRadioStream = line.Substring(19);
         }
     }
 }

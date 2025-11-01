@@ -1,6 +1,10 @@
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using AdoBot.Data;
 using NetCord;
+using NetCord.Gateway;
+using NetCord.Gateway.Voice;
+using NetCord.Logging;
 using NetCord.Rest;
 using NetCord.Services.ApplicationCommands;
 
@@ -54,7 +58,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
                 {
                     Embeds = [embed]
                 });
-            
+
             // TODO: notify the striked user? genuinely no idea how the FUCK i would do that though, since the API doesn't allow DMs
 
             if (updated > 3)
@@ -63,7 +67,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
                 {
                     AuditLogReason = "Three strikes"
                 };
-                await user.BanAsync(properties:props);
+                await user.BanAsync(properties: props);
 
                 var banEmbed = new EmbedProperties
                 {
@@ -94,10 +98,10 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
     public async Task Slash_QueryStrikes(GuildUser user)
     {
         var guildId = user.GuildId;
-        
+
         var count = BotDatabase.Instance.Strikes
             .FindOne(x => x.GuildId == guildId && x.UserId == user.Id)?.Count ?? 0;
-        
+
         var embed = new EmbedProperties
         {
             Title = $"Strike count for {user.Username}",
@@ -113,16 +117,16 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
                 Flags = MessageFlags.Ephemeral
             }));
     }
-    
+
     [SlashCommand("queryself", "Queries your strike count.",
         Contexts = [InteractionContextType.Guild])]
     public async Task Slash_QueryStrikesSelf()
     {
         var user = Context.User;
-        
+
         var count = BotDatabase.Instance.Strikes
             .FindOne(x => x.GuildId == Context.Guild.Id && x.UserId == user.Id)?.Count ?? 0;
-        
+
         var embed = new EmbedProperties
         {
             Title = $"Your strike count:",
@@ -138,7 +142,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
                 Flags = MessageFlags.Ephemeral
             }));
     }
-    
+
     [SlashCommand("kick", "Kicks the given user.",
         DefaultGuildPermissions = Permissions.KickUsers | Permissions.BanUsers,
         Contexts = [InteractionContextType.Guild])]
@@ -150,7 +154,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
             {
                 AuditLogReason = reason
             };
-            await user.KickAsync(properties:props);
+            await user.KickAsync(properties: props);
 
             var banEmbed = new EmbedProperties
             {
@@ -173,12 +177,13 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
             Console.WriteLine(ex);
         }
     }
-    
+
     [SlashCommand("ban", "Bans the given user.",
         DefaultGuildPermissions = Permissions.KickUsers | Permissions.BanUsers,
         Contexts = [InteractionContextType.Guild])]
     public async Task Slash_Ban(GuildUser user, string reason = "No reason") // TODO: implement banning for a duration
-    {                                                                        // Not gonna be fun to implement this, since I need to make a database table for it AND constantly check for expired bans.
+    {
+        // Not gonna be fun to implement this, since I need to make a database table for it AND constantly check for expired bans.
         try
         {
             // if (!TryParseDuration(duration, out var timespan))
@@ -196,7 +201,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
             {
                 AuditLogReason = reason
             };
-            await user.BanAsync(properties:props);
+            await user.BanAsync(properties: props);
 
             var banEmbed = new EmbedProperties
             {
@@ -219,7 +224,7 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
             Console.WriteLine(ex);
         }
     }
-    
+
     // TODO: implement this (not doing it yet since I have zero clue how to find a user's ID from the ban menu)
     // [SlashCommand("unban", "Unbans a user by their user ID.",
     //     DefaultGuildPermissions = Permissions.KickUsers | Permissions.BanUsers,
@@ -274,15 +279,15 @@ public class CommandRegister : ApplicationCommandModule<ApplicationCommandContex
 ",
             Footer = new EmbedFooterProperties() { Text = $"AdoBot Version {Config.Version}" }
         };
-        
+
         await Context.Interaction.SendResponseAsync(
-        InteractionCallback.Message(new InteractionMessageProperties
-        {
-            Embeds = [embed],
-            Flags = MessageFlags.Ephemeral
-        }));
+            InteractionCallback.Message(new InteractionMessageProperties
+            {
+                Embeds = [embed],
+                Flags = MessageFlags.Ephemeral
+            }));
     }
-    
+
     private static bool TryParseDuration(string input, out TimeSpan result)
     {
         result = TimeSpan.Zero;

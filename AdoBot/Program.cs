@@ -71,7 +71,9 @@ public static class Program
             Since = DateTime.UtcNow,
         };
         await client.UpdatePresenceAsync(presenceProperties);
-
+        
+        // TODO: don't instantly connect when the client starts, since this will waste hella bandwidth
+        await DiscordAPI.PlayAsync(client);
 
         // Start a single consumer that executes queued sends in order
         _ = Task.Run(async () =>
